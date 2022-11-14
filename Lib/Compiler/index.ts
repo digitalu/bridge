@@ -1,6 +1,6 @@
 import { compileSDK } from './compileSDK';
 import { BridgeRoutes } from '../Routes';
-import { writeFile } from './fs';
+import { writeFile } from '../Utilities/fs';
 import fs from 'fs';
 import { fetchFile } from './fetchFile';
 

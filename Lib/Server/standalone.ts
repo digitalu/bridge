@@ -5,6 +5,7 @@ import { ErrorHandler } from '../Errors';
 import { getJSONDataFromRequestStream, formidableAsyncParseFiles, getJSONQueryFromURL } from './HttpTransformers';
 import { createRoutes, BridgeRoutes, Method } from '../Routes';
 import { compile as compileSDK } from '../Compiler';
+import { neoCompile } from '../NewCompiler';
 
 export const createHttpHandler = (routes: BridgeRoutes, onError?: ErrorHandler) => {
   let path: string;
@@ -14,6 +15,7 @@ export const createHttpHandler = (routes: BridgeRoutes, onError?: ErrorHandler) 
 
   // After compiling, it quits
   if (process.argv.includes('-compileBridgeSDK')) compileSDK(routes);
+  else if (process.argv.includes('-compileBridgeSDKNEO')) neoCompile(routes);
 
   return async (req: IncomingMessage, res: ServerResponse) => {
     let body: Record<any, any> = {};

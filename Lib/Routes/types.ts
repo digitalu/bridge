@@ -10,6 +10,10 @@ export interface ServerRoutes {
   };
 }
 
+export interface ClearRoutes {
+  [key: string]: ClearRoutes | Handler;
+}
+
 export type Method = 'POST' | 'PATCH' | 'GET' | 'DELETE' | 'PUT';
 
 // We don't need to inject the files types because the compiler can understand by itself its typez

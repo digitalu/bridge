@@ -1,6 +1,6 @@
 import { BridgeRoutes } from '../Routes';
 import { isController, pathArrayToPath, upperCaseFirstLetterOnly } from '../Utilities';
-import { removeFolder, createFolder, writeFile } from './fs';
+import { removeFolder, createFolder, writeFile } from '../Utilities/fs';
 import { writeController } from './writeControllers';
 
 let API: any;

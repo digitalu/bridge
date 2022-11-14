@@ -1,7 +1,7 @@
 import { ControllerI } from '../Controller';
 import { BridgeHandler } from '../Handler';
 import { isController, isBridgeHandler, getParamsObjectString, pathArrayToPath } from '../Utilities';
-import { createFolder, writeFile } from './fs';
+import { createFolder, writeFile } from '../Utilities/fs';
 import zodToJsonSchema from 'zod-to-json-schema';
 import { jsonSchemaToZod } from 'json-schema-to-zod';
 import { isZodParser } from '../Handler/Validators/dataValidator';
