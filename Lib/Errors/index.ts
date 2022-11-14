@@ -4,7 +4,7 @@ export const httpError = <Type extends keyof ErrorStatus, Name extends string, D
   type: Type,
   name: Name,
   data?: Data
-): { error: { name: Name; data?: Data; status: ErrorStatus[Type] } } => {
+): { error: { name: Name; data?: any; status: ErrorStatus[Type] } } => {
   return { error: { status: errorStatus[type], name, data } };
 };
 
