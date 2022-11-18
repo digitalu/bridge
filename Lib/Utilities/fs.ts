@@ -2,7 +2,7 @@ import fs from 'fs';
 
 export const removeFile = (location: string) => {
   try {
-    fs.rmSync(location, { recursive: true, force: true });
+    fs.unlinkSync(location);
   } catch (err) {
     console.error('Remove folder error: ', err);
   }
