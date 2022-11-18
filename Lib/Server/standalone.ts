@@ -15,7 +15,7 @@ export const createHttpHandler = (routes: BridgeRoutes, onError?: ErrorHandler) 
 
   // After compiling, it quits
   if (process.argv.includes('-compileBridgeSDK')) compileSDK(routes);
-  else if (process.argv.includes('-compileBridgeSDKNEO')) complieBridgeJSONSDK(routes);
+  else if (process.argv.includes('-complieBridgeJSONSDK')) complieBridgeJSONSDK(routes);
 
   return async (req: IncomingMessage, res: ServerResponse) => {
     let body: Record<any, any> = {};
