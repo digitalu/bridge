@@ -1,7 +1,7 @@
 import * as ts from 'typescript';
 // import prettier from 'prettier';
 import fs from 'fs';
-import { createClearRoutes, BridgeRoutes, ClearRoutes, isBridgeHandler, Method } from '../index';
+import { createClearRoutes, BridgeRoutes, ClearRoutes, isBridgeHandler, Method, writeFile } from '../index';
 import { ConstructType, cleanConstructType, createConstructType } from './constructType';
 
 const { log } = console;
@@ -90,6 +90,6 @@ export const compile = (routes: BridgeRoutes) => {
 
   if (myComponentSourceFile) {
     const bridgeAPI = createBridgeApi(clearRoutes, myComponentSourceFile, checker, []);
-    fs.writeFile('BRIDGE_SDK_API.json', JSON.stringify(bridgeAPI), () => {});
+    writeFile('BRIDGE_SDK_API', JSON.stringify(bridgeAPI), 'json');
   }
 };
