@@ -11,7 +11,7 @@ export interface ServerRoutes {
 }
 
 export interface ClearRoutes {
-  [key: string]: ClearRoutes | Handler;
+  [key: string]: ClearRoutes | BridgeHandler;
 }
 
 export type Method = 'POST' | 'PATCH' | 'GET' | 'DELETE' | 'PUT';
