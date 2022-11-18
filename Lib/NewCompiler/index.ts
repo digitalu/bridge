@@ -13,15 +13,13 @@ const createTempFileWithTypes = (routes: ClearRoutes, path: string[]) => {
   });
 };
 
-export const complieBridgeJSONSDK = (routes: BridgeRoutes) => {
+export const compileBridgeJSONSDK = (routes: BridgeRoutes) => {
   if (!fs.existsSync('bridge.config.json')) throw new Error('Try to compile with the create create-bridge-sdk instead.');
 
   const cfg = JSON.parse(fs.readFileSync('bridge.config.json', 'utf-8'));
 
   pathToSourceFile = cfg.pathToSourceFile;
   tempTypesFile += `import { SDKTypes } from "${pathToSourceFile.replace('.ts', '')}"\n\n`;
-
-  console.log('AHH');
 
   const clearRoutes = createClearRoutes(routes);
 
