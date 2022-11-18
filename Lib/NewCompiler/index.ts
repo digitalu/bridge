@@ -31,7 +31,7 @@ export const complieBridgeJSONSDK = (routes: BridgeRoutes) => {
 
   compile(routes);
 
-  removeFile('./tempTypesFileJBFsdjhgJBYTF');
+  removeFile('./tempTypesFileJBFsdjhgJBYTF.ts');
 
   process.exit(0);
 };
