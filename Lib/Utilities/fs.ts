@@ -1,5 +1,13 @@
 import fs from 'fs';
 
+export const removeFile = (location: string) => {
+  try {
+    fs.rmSync(location, { recursive: true, force: true });
+  } catch (err) {
+    console.error('Remove folder error: ', err);
+  }
+};
+
 export const removeFolder = (location: string) => {
   try {
     fs.rmSync(location, { recursive: true, force: true });
