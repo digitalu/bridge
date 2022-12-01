@@ -1,4 +1,4 @@
-import { errorStatus, ErrorStatus } from './status';
+import { ErrorStatus } from './status';
 
 interface Error {
   name: string;
@@ -9,12 +9,19 @@ interface Error {
 export const isError = (error: any): error is Error =>
   typeof error === 'object' && typeof error.name === 'string' && typeof error.status === 'number';
 
-export const httpError = <Type extends keyof ErrorStatus, Name extends string, Data>(
-  type: Type,
+/**
+ *
+ * ##Titre
+ *
+ * Text
+ */
+export const httpError = <Status extends ErrorStatus, Name extends string, Data>(
+  status: Status,
   name: Name,
   data?: Data,
-): { error: { name: Name; data?: any; status: ErrorStatus[Type] } } => {
-  return { error: { status: errorStatus[type], name, data } };
+): { error: { name: Name; data?: any; status: Status } } => {
+  return { error: { status, name, data } };
 };
 
 export * from './listener';
+export * from './status';

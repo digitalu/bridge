@@ -4,7 +4,7 @@ type AnyObject = Record<any, any>;
 
 export interface HandlerParams {
   body: AnyObject;
-  parameters: AnyObject;
+  query: AnyObject;
   headers: AnyObject;
   // file: AnyObject;
   mid: AnyObject;

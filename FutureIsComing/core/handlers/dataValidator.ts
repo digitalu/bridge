@@ -24,7 +24,7 @@ export class DataValidator<Output = any> extends AbstractHandler {
 
   constructor(
     private parser: DataParser<Output>,
-    private dataToValidate: 'body' | 'parameters' | 'headers',
+    private dataToValidate: 'body' | 'query' | 'headers',
   ) {
     super();
   }
@@ -48,11 +48,11 @@ export class DataValidator<Output = any> extends AbstractHandler {
     } catch (error) {
       switch (this.dataToValidate) {
         case 'body':
-          return httpError('Unprocessable entity', `Body schema validation error`, error);
-        case 'parameters':
-          return httpError('Unprocessable entity', `Parameters schema validation error`, error);
+          return httpError(422, `Body schema validation error`, error);
+        case 'query':
+          return httpError(422, `Parameters schema validation error`, error);
         case 'headers':
-          return httpError('Unprocessable entity', `Headers schema validation error`, error);
+          return httpError(422, `Headers schema validation error`, error);
       }
     }
   };

@@ -6,7 +6,7 @@ import { DataParser, BridgeHandler, InferDataParser, BridgeHandlerDocumentation 
 
 // export interface BridgeParams {
 //   body: AnyObject;
-//   parameters: AnyObject;
+//   query: AnyObject;
 //   headers: AnyObject;
 //   file: AnyObject;
 //   mid: AnyObject;
@@ -18,16 +18,16 @@ export interface BridgeParams<
   Mids extends ReadonlyArray<BridgeHandler> = never,
   Meth extends Method = 'POST',
   Body extends DataParser<Record<any, any>> = never,
-  Parameters extends DataParser<Record<any, any>> = never,
+  Query extends DataParser<Record<any, any>> = never,
   Headers extends DataParser<Record<any, any>> = never,
 > {
   resolve: Resolve;
   middlewares?: Mids;
   method?: Meth;
   body?: Body /** Can't have a body with GET method or with files, an error is throw if ther developer tries to, but the type here doesnt block to keep a clean UI */;
-  parameters?: Parameters;
+  query?: Query;
   headers?: Headers;
-  description?: BridgeHandlerDocumentation;
+  documentation?: BridgeHandlerDocumentation;
 }
 
 export type CreateHandler = <
@@ -36,8 +36,8 @@ export type CreateHandler = <
       mid: MidsReturnsIntersection<Mids> extends never ? {} : MidsReturnsIntersection<Mids>;
       body: (InferDataParser<Body> extends never ? {} : InferDataParser<Body>) &
         (MidsParams<Mids>['body'] extends never ? {} : MidsParams<Mids>['body']);
-      parameters: (InferDataParser<Parameters> extends never ? {} : InferDataParser<Parameters>) &
-        (MidsParams<Mids>['parameters'] extends never ? {} : MidsParams<Mids>['parameters']);
+      query: (InferDataParser<Query> extends never ? {} : InferDataParser<Query>) &
+        (MidsParams<Mids>['query'] extends never ? {} : MidsParams<Mids>['query']);
       headers: (InferDataParser<Headers> extends never ? {} : InferDataParser<Headers>) &
         (MidsParams<Mids>['headers'] extends never ? {} : MidsParams<Mids>['headers']);
       //   file: File extends ['BridgeFilesDoNotExists']
@@ -50,8 +50,8 @@ export type CreateHandler = <
         mid: MidsReturnsIntersection<Mids> extends never ? {} : MidsReturnsIntersection<Mids>;
         body: (InferDataParser<Body> extends never ? {} : InferDataParser<Body>) &
           (MidsParams<Mids>['body'] extends never ? {} : MidsParams<Mids>['body']);
-        query: (InferDataParser<Parameters> extends never ? {} : InferDataParser<Parameters>) &
-          (MidsParams<Mids>['parameters'] extends never ? {} : MidsParams<Mids>['parameters']);
+        query: (InferDataParser<Query> extends never ? {} : InferDataParser<Query>) &
+          (MidsParams<Mids>['query'] extends never ? {} : MidsParams<Mids>['query']);
         headers: (InferDataParser<Headers> extends never ? {} : InferDataParser<Headers>) &
           (MidsParams<Mids>['headers'] extends never ? {} : MidsParams<Mids>['headers']);
         // file: File extends ['BridgeFilesDoNotExists']
@@ -63,8 +63,8 @@ export type CreateHandler = <
       mid: MidsReturnsIntersection<Mids> extends never ? {} : MidsReturnsIntersection<Mids>;
       body: (InferDataParser<Body> extends never ? {} : InferDataParser<Body>) &
         (MidsParams<Mids>['body'] extends never ? {} : MidsParams<Mids>['body']);
-      query: (InferDataParser<Parameters> extends never ? {} : InferDataParser<Parameters>) &
-        (MidsParams<Mids>['parameters'] extends never ? {} : MidsParams<Mids>['parameters']);
+      query: (InferDataParser<Query> extends never ? {} : InferDataParser<Query>) &
+        (MidsParams<Mids>['query'] extends never ? {} : MidsParams<Mids>['query']);
       headers: (InferDataParser<Headers> extends never ? {} : InferDataParser<Headers>) &
         (MidsParams<Mids>['headers'] extends never ? {} : MidsParams<Mids>['headers']);
       //   file: File extends ['BridgeFilesDoNotExists']
@@ -76,11 +76,11 @@ export type CreateHandler = <
   }) => Res,
   Res,
   Body extends DataParser<Record<any, any>> = never,
-  Parameters extends DataParser<Record<string, any>> = never,
+  Query extends DataParser<Record<string, any>> = never,
   Headers extends DataParser<Record<string, any>> = never,
   //   File extends FilesConfig = ['BridgeFilesDoNotExists'],
   Mids extends ReadonlyArray<BridgeHandler> = never,
   Meth extends Method = 'POST',
 >(
-  p: BridgeParams<Resolve, Mids, Meth, Body, Parameters, Headers>,
+  p: BridgeParams<Resolve, Mids, Meth, Body, Query, Headers>,
 ) => BridgeHandler<Resolve, Mids>;

@@ -20,11 +20,11 @@ export class BridgeHandler<
     public config: {
       resolve: Resolve;
       bodySchema?: DataParser;
-      parametersSchema?: DataParser;
+      querySchema?: DataParser;
       headersSchema?: DataParser;
       method?: Method;
       middlewares?: Middlewares;
-      description?: BridgeHandlerDocumentation; // NEED TO INFER FROM DATA TO DOCUMENTATE PARAMS
+      documentation?: BridgeHandlerDocumentation; // NEED TO INFER FROM DATA TO DOCUMENTATE PARAMS
     },
   ) {
     super();
@@ -40,8 +40,8 @@ export class BridgeHandler<
     let handler = firstHandler;
 
     if (config.bodySchema) handler = handler.setNext(new DataValidator(config.bodySchema, 'body'));
-    if (config.parametersSchema)
-      handler = handler.setNext(new DataValidator(config.parametersSchema, 'parameters'));
+    if (config.querySchema)
+      handler = handler.setNext(new DataValidator(config.querySchema, 'query'));
     if (config.headersSchema)
       handler = handler.setNext(new DataValidator(config.headersSchema, 'headers'));
 

@@ -5,12 +5,12 @@ import { BridgeHandler } from './handlers';
 export const handler: CreateHandler = (routeParams) => {
   return new BridgeHandler({
     bodySchema: routeParams.body,
-    parametersSchema: routeParams.parameters,
+    querySchema: routeParams.query,
     headersSchema: routeParams.headers,
     // filesConfig: routeParams.file,
     method: routeParams.method,
     middlewares: routeParams.middlewares,
-    description: routeParams.description,
+    documentation: routeParams.documentation,
     resolve: routeParams.resolve,
   });
 };

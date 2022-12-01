@@ -5,7 +5,7 @@ import { convertBridgeRoutesToServerRoutes, BridgeRoutes, Method } from '../../r
 
 export const createHttpHandler = (routes: BridgeRoutes, onError?: ErrorHandler) => {
   let path: string;
-  let parametersString: string;
+  let queryString: string;
 
   const serverRoutes = convertBridgeRoutesToServerRoutes(routes);
 
@@ -13,10 +13,10 @@ export const createHttpHandler = (routes: BridgeRoutes, onError?: ErrorHandler) 
     let body: Record<any, any> = {};
     // let file: formidable.Files = {};
 
-    const parameters = getJSONQueryFromURL(req.url || '');
+    const query = getJSONQueryFromURL(req.url || '');
 
     try {
-      [path, parametersString] = (req.url || '/').split('?');
+      [path, queryString] = (req.url || '/').split('?');
 
       const route = serverRoutes[path] || serverRoutes['not-found'];
 
@@ -28,7 +28,7 @@ export const createHttpHandler = (routes: BridgeRoutes, onError?: ErrorHandler) 
       const result = await route.endpoint.handle({
         body,
         // file,
-        parameters,
+        query,
         headers: req.headers,
         method: req.method as Method,
         mid,

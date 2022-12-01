@@ -1,4 +1,4 @@
-import { BridgeRoutes, ServerRoutes } from './types';
+import { BridgeRoutes, ServerRoutes, isBridgeRoutes } from './types';
 import { handler, isBridgeHandler } from '../core';
 import { httpError } from '../error';
 
@@ -18,7 +18,7 @@ export const convertBridgeRoutesToServerRoutes = (
 ): ServerRoutes => {
   for (const [key, value] of Object.entries(routes)) {
     if (isBridgeHandler(value)) serverRoutes[`${prefix}/${key}`] = { endpoint: value };
-    else convertBridgeRoutesToServerRoutes(value, `${prefix}/${key}`);
+    else if (isBridgeRoutes(value)) convertBridgeRoutesToServerRoutes(value, `${prefix}/${key}`);
   }
 
   return { ...defaultServerRoutes, ...serverRoutes };
