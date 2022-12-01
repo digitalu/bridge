@@ -7,6 +7,9 @@ export const isController = (data: any): data is ControllerI => {
 
 export const isBridgeHandler = (data: any): data is BridgeHandler => {
   return (
-    typeof data === 'object' && data.resolve !== undefined && typeof data.resolve === 'function' && data.isBridgeHandler
+    typeof data === 'object' &&
+    data.resolve !== undefined &&
+    typeof data.resolve === 'function' &&
+    data.isBridgeHandler
   );
 };

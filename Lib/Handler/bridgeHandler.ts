@@ -1,11 +1,17 @@
 import { Method } from '../Routes';
 import { Resolver } from './resolver';
-import { DataValidator, MethodValidator, FilesValidator, DataParser, FilesConfig } from './Validators';
+import {
+  DataValidator,
+  MethodValidator,
+  FilesValidator,
+  DataParser,
+  FilesConfig,
+} from './Validators';
 import { Handler, AbstractHandler, MiddelwaresHandler } from './handler';
 
 export class BridgeHandler<
   Resolve extends (...args: any[]) => any = any,
-  Middlewares extends ReadonlyArray<BridgeHandler> = any
+  Middlewares extends ReadonlyArray<BridgeHandler> = any,
 > extends AbstractHandler {
   public isBridgeHandler = true;
 
@@ -29,7 +35,7 @@ export class BridgeHandler<
       method?: Method;
       middlewares?: Middlewares;
       description?: string;
-    }
+    },
   ) {
     super();
     this.resolve = p.resolve;
@@ -41,8 +47,10 @@ export class BridgeHandler<
     this.headersSchema = p.headersSchema;
     this.middlewares = p.middlewares;
 
-    if (p.method === 'GET' && p.bodySchema) throw new Error("You can't have a body with a GET endpoint.");
-    if (p.bodySchema && p.filesConfig) throw new Error("You can't get a JSON body and files in the same endpoint.");
+    if (p.method === 'GET' && p.bodySchema)
+      throw new Error("You can't have a body with a GET endpoint.");
+    if (p.bodySchema && p.filesConfig)
+      throw new Error("You can't get a JSON body and files in the same endpoint.");
 
     const firstHandler: Handler = new MethodValidator(p.method);
     let handler = firstHandler;

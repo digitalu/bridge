@@ -1,50 +1,36 @@
 import { IncomingMessage, ServerResponse } from 'http';
-import formidable from 'formidable';
-import { fetchSdkRoute } from './fetchSDK';
-import { ErrorHandler } from '../Errors';
-import {
-  getJSONDataFromRequestStream,
-  formidableAsyncParseFiles,
-  getJSONQueryFromURL,
-} from './HttpTransformers';
-import { createRoutes, BridgeRoutes, Method } from '../Routes';
-import { compile as compileSDK } from '../Compiler';
-import { compileBridgeJSONSDK } from '../NewCompiler';
+import { ErrorHandler } from '../../error';
+import { getJSONDataFromRequestStream, getJSONQueryFromURL } from '../httpTransormers';
+import { convertBridgeRoutesToServerRoutes, BridgeRoutes, Method } from '../../routes';
 
 export const createHttpHandler = (routes: BridgeRoutes, onError?: ErrorHandler) => {
   let path: string;
-  let queryString: string;
+  let parametersString: string;
 
-  const serverRoutes = createRoutes(routes);
-
-  // After compiling, it quits
-  if (process.argv.includes('-compileBridgeSDK')) compileSDK(routes);
-  else if (process.argv.includes('-compileBridgeJSONSDK')) compileBridgeJSONSDK(routes);
+  const serverRoutes = convertBridgeRoutesToServerRoutes(routes);
 
   return async (req: IncomingMessage, res: ServerResponse) => {
     let body: Record<any, any> = {};
-    let file: formidable.Files = {};
+    // let file: formidable.Files = {};
 
-    const query = getJSONQueryFromURL(req.url || '');
+    const parameters = getJSONQueryFromURL(req.url || '');
 
     try {
-      [path, queryString] = (req.url || '/').split('?');
-
-      if (path === '/fetchBridgeSDK') return fetchSdkRoute(req, res);
+      [path, parametersString] = (req.url || '/').split('?');
 
       const route = serverRoutes[path] || serverRoutes['not-found'];
 
-      if (route.filesConfig) file = await formidableAsyncParseFiles(req);
-      else body = await getJSONDataFromRequestStream(req);
+      // if (route.filesConfig) file = await formidableAsyncParseFiles(req); else
+      body = await getJSONDataFromRequestStream(req);
 
       const mid = {};
 
       const result = await route.endpoint.handle({
         body,
-        file,
-        query,
+        // file,
+        parameters,
         headers: req.headers,
-        method: (req.method as Method) || 'POST',
+        method: req.method as Method,
         mid,
       });
 
