@@ -3,12 +3,6 @@ import { httpError, StatusCode } from '../../error';
 
 export type FileConfig = 'any' | ReadonlyArray<string>;
 
-const what: FileConfig = {} as FileConfig;
-
-type Test<GG extends FileConfig> = GG extends true ? 1 : 2;
-
-type JJJK = Test<['false']>;
-
 export class FileValidator extends AbstractHandler {
   constructor(private config: FileConfig) {
     super();
@@ -18,7 +12,7 @@ export class FileValidator extends AbstractHandler {
     const missingFiles: string[] = [];
 
     // req.body contains the files
-    if (this.config !== true)
+    if (this.config !== 'any')
       for (const name of this.config) if (!data.file[name]) missingFiles.push(name);
 
     if (missingFiles.length > 0)
