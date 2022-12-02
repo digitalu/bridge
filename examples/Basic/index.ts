@@ -42,15 +42,7 @@ class User {
 
   public getMe = handler({
     middlewares: apply(authMiddleware), // or [authMiddleware] as const --> Equivalent
-    headers: z.object({ sdifuh: z.string() }),
-    resolve: ({ headers, mid }) => mid,
-  });
-
-  // This code is equivalent to
-
-  public getMe2 = handler({
-    middlewares: [authMiddleware] as const,
-    resolve: ({ headers, mid }) => mid,
+    resolve: ({ mid }) => mid,
   });
 }
 
@@ -59,8 +51,6 @@ const helloHandler = handler({
   query: z.object({ name: z.string() }),
   resolve: ({ body, query }) => `hey ${body.name} ${query.name}`,
 });
-
-const res = helloHandler.resolve({ body: { name: '' }, query: { name: '' } });
 
 const routes = {
   documentation: {

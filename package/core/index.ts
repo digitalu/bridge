@@ -7,7 +7,7 @@ export const handler: CreateHandler = (routeParams) => {
     bodySchema: routeParams.body,
     querySchema: routeParams.query,
     headersSchema: routeParams.headers,
-    // filesConfig: routeParams.file,
+    fileConfig: routeParams.file,
     method: routeParams.method,
     middlewares: routeParams.middlewares,
     documentation: routeParams.documentation,
