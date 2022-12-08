@@ -1,2 +1,2 @@
-- [ ] Implement documentation
-
+- [ ] Implement documentation with type of each input parameter
+- [ ] Custom input validation

@@ -10,7 +10,7 @@ import formidableLib from 'formidable';
 
 export const createHttpHandler = (
   routes: BridgeRoutes,
-  { errorHandler, formidable }: { errorHandler?: ErrorHandler; formidable?: typeof formidableLib },
+  config?: { errorHandler?: ErrorHandler; formidable?: typeof formidableLib },
 ) => {
   let path: string;
   let queryString: string;
@@ -28,13 +28,13 @@ export const createHttpHandler = (
 
       const route = serverRoutes[path] || serverRoutes['not-found'];
 
-      if (route.endpoint.config.fileConfig && !formidable)
+      if (route.endpoint.config.fileConfig && !config?.formidable)
         throw new Error(
           `You need to install formidable and to give it to Bridge in order to use files.`,
         );
 
       if (route.endpoint.config.fileConfig)
-        file = await formidableAsyncParseFiles(req, formidable!);
+        file = await formidableAsyncParseFiles(req, config?.formidable!);
       else body = await getJSONDataFromRequestStream(req);
 
       const mid = {};
@@ -49,7 +49,7 @@ export const createHttpHandler = (
       });
 
       if (result.error) {
-        errorHandler?.({ error: result.error, path: path });
+        config?.errorHandler?.({ error: result.error, path: path });
         return res
           .writeHead(result.error.status || 500, { 'Content-Type': 'application/json' })
           .end(JSON.stringify({ error: result.error }));
@@ -61,7 +61,7 @@ export const createHttpHandler = (
         })
         .end(typeof result === 'object' ? JSON.stringify(result) : result);
     } catch (err) {
-      errorHandler?.({
+      config?.errorHandler?.({
         error: { status: 500, name: 'Internal server error', data: err },
         path: path,
       });
