@@ -40,10 +40,10 @@ type BridgeHandlerReturnType<H extends BridgeHandler> = H extends BridgeHandler<
     }
   : {};
 
-export type RoutesToSDK<T extends BridgeRoutes> = {
+export type RoutesToBridgeType<T extends BridgeRoutes> = {
   [key in keyof T]: T[key] extends BridgeHandler
     ? BridgeHandlerReturnType<T[key]>
     : T[key] extends BridgeRoutes
-    ? RoutesToSDK<T[key]>
+    ? RoutesToBridgeType<T[key]>
     : never;
 };
