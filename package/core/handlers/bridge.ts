@@ -78,6 +78,7 @@ export class BridgeHandler<
 }
 
 export const isBridgeHandler = (data: any): data is BridgeHandler =>
+  data &&
   typeof data === 'object' &&
   typeof data.handler === 'object' &&
   typeof data.handle === 'function' &&
