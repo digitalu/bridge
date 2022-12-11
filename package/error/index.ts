@@ -6,8 +6,11 @@ interface Error {
   data?: any;
 }
 
-export const isError = (error: any): error is Error =>
-  typeof error === 'object' && typeof error.name === 'string' && typeof error.status === 'number';
+export const isError = (object: any): object is Error =>
+  typeof object === 'object' &&
+  typeof object.error === 'object' &&
+  typeof object.error.name === 'string' &&
+  typeof object.error.status === 'number';
 
 /**
  *
