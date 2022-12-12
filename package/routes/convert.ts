@@ -16,11 +16,11 @@ export const convertBridgeRoutesToServerRoutes = (
   routes: BridgeRoutes,
   prefix = '',
 ): ServerRoutes => {
-  if (typeof routes === 'object')
-    for (const [key, value] of Object.entries(routes)) {
-      if (isBridgeHandler(value)) serverRoutes[`${prefix}/${key}`] = { endpoint: value };
-      else if (isBridgeRoutes(value)) convertBridgeRoutesToServerRoutes(value, `${prefix}/${key}`);
-    }
+  for (const [key, value] of Object.entries(routes)) {
+    if (!value) continue;
+    else if (isBridgeHandler(value)) serverRoutes[`${prefix}/${key}`] = { endpoint: value };
+    else if (isBridgeRoutes(value)) convertBridgeRoutesToServerRoutes(value, `${prefix}/${key}`);
+  }
 
   return { ...defaultServerRoutes, ...serverRoutes };
 };
