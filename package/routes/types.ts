@@ -1,9 +1,9 @@
-import { BridgeHandler } from '../core';
+import { BridgeHandler, handler } from '../core';
 
 export type Method = 'POST' | 'PATCH' | 'GET' | 'DELETE' | 'PUT';
 
 export type BridgeRoutes<Object extends BridgeRoutes = {}> = {
-  [key: string]: Object | BridgeHandler;
+  [key: string]: Object | BridgeHandler | any;
 };
 
 export const isBridgeRoutes = (data: any): data is BridgeRoutes => typeof data === 'object';
