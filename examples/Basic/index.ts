@@ -5,7 +5,7 @@ import {
   apply,
   onError,
   StatusCode,
-} from '../package';
+} from '../../package';
 import z from 'zod';
 import express from 'express';
 
