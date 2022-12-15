@@ -6,24 +6,8 @@ import type * as express from 'express';
 import formidableLib from 'formidable';
 import { createHttpHandler } from './server/adapters/node-http';
 
-// export const initBridge = <Routes extends BridgeRoutes>({
-//   routes,
-//   url,
-//   errorHandler,
-//   formidable,
-// }: {
-//   routes: Routes;
-//   url?: string;
-//   formidable?: typeof formidableLib;
-//   errorHandler?: ErrorHandler;
-// }): { bridgeType: RoutesToBridgeType<Routes>; createExpressMiddleware: () => express.Handler } => {
-//   return {
-//     createExpressMiddleware: () => createHttpHandler(routes, { formidable, errorHandler }),
-//   } as any;
-// };
-
 class Bridge<Routes extends BridgeRoutes> {
-  private bridgeType!: RoutesToBridgeType<Routes>;
+  public bridgeType!: RoutesToBridgeType<Routes>;
 
   constructor(
     public routes: Routes,
