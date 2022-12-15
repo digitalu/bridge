@@ -6,11 +6,11 @@ import {
   formidableAsyncParseFiles,
 } from '../httpTransormers';
 import { convertBridgeRoutesToServerRoutes, BridgeRoutes, Method } from '../../routes';
-import formidableLib from 'formidable';
+import { FormidableFile } from '../../utilities';
 
 export const createHttpHandler = (
   routes: BridgeRoutes,
-  config?: { errorHandler?: ErrorHandler; formidable?: typeof formidableLib },
+  config?: { errorHandler?: ErrorHandler; formidable?: any },
 ) => {
   let path: string;
   let queryString: string;
@@ -19,7 +19,7 @@ export const createHttpHandler = (
 
   return async (req: IncomingMessage, res: ServerResponse) => {
     let body: Record<any, any> = {};
-    let file: formidableLib.Files = {};
+    let file: { [file: string]: FormidableFile | FormidableFile[] } = {};
 
     const query = getJSONQueryFromURL(req.url || '');
 

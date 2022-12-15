@@ -2,8 +2,6 @@ import { BridgeRoutes } from './routes';
 import { ErrorHandler } from './error';
 import { RoutesToBridgeType } from './routes';
 import type * as express from 'express';
-// @ts-ignore
-import formidableLib from 'formidable';
 import { createHttpHandler } from './server/adapters/node-http';
 
 class Bridge<Routes extends BridgeRoutes> {
@@ -11,14 +9,13 @@ class Bridge<Routes extends BridgeRoutes> {
 
   constructor(
     public routes: Routes,
-    private config: { errorHandler?: ErrorHandler; formidable?: typeof formidableLib },
+    private config: { errorHandler?: ErrorHandler; formidable?: any },
     private url: string,
   ) {}
 
   public expressMiddleware = (): express.Handler => createHttpHandler(this.routes, this.config);
 }
 
-// @ts-nocheck
 export const initBridge = <Routes extends BridgeRoutes>({
   routes,
   url,
@@ -27,6 +24,6 @@ export const initBridge = <Routes extends BridgeRoutes>({
 }: {
   routes: Routes;
   url?: string;
-  formidable?: typeof formidableLib;
+  formidable?: any;
   errorHandler?: ErrorHandler;
 }): Bridge<Routes> => new Bridge(routes, { formidable, errorHandler }, url || '');

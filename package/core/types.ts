@@ -7,8 +7,7 @@ import {
   BridgeHandlerDocumentation,
   FileConfig,
 } from './handlers';
-// @ts-ignore
-import formidable from 'formidable';
+import { FormidableFile } from '../utilities';
 
 export interface BridgeParams<
   Resolve = any,
@@ -42,8 +41,8 @@ export type CreateHandler = <
       file: File extends ['BridgeFilesDoNotExists']
         ? {}
         : File extends 'any'
-        ? { [key: string]: formidable.File }
-        : { [key in File[number]]: formidable.File };
+        ? { [key: string]: FormidableFile }
+        : { [key in File[number]]: FormidableFile };
     }> &
       keyof {
         mid: MidsReturnsIntersection<Mids> extends never ? {} : MidsReturnsIntersection<Mids>;
@@ -56,8 +55,8 @@ export type CreateHandler = <
         file: File extends ['BridgeFilesDoNotExists']
           ? {}
           : File extends 'any'
-          ? { [key: string]: formidable.File }
-          : { [key in File[number]]: formidable.File };
+          ? { [key: string]: FormidableFile }
+          : { [key in File[number]]: FormidableFile };
       }]: {
       mid: MidsReturnsIntersection<Mids> extends never ? {} : MidsReturnsIntersection<Mids>;
       body: (InferDataParser<Body> extends never ? {} : InferDataParser<Body>) &
@@ -69,8 +68,8 @@ export type CreateHandler = <
       file: File extends ['BridgeFilesDoNotExists']
         ? {}
         : File extends 'any'
-        ? { [key: string]: formidable.File }
-        : { [key in File[number]]: formidable.File };
+        ? { [key: string]: FormidableFile }
+        : { [key in File[number]]: FormidableFile };
     }[key];
   }) => Res,
   Res,
