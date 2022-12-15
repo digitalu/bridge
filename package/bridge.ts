@@ -1,8 +1,8 @@
 import { BridgeRoutes } from './routes';
 import { ErrorHandler } from './error';
 import { RoutesToBridgeType } from './routes';
-import { handler } from './core';
 import type * as express from 'express';
+// @ts-ignore
 import formidableLib from 'formidable';
 import { createHttpHandler } from './server/adapters/node-http';
 
@@ -18,6 +18,7 @@ class Bridge<Routes extends BridgeRoutes> {
   public expressMiddleware = (): express.Handler => createHttpHandler(this.routes, this.config);
 }
 
+// @ts-nocheck
 export const initBridge = <Routes extends BridgeRoutes>({
   routes,
   url,

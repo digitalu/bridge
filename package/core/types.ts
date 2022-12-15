@@ -7,6 +7,7 @@ import {
   BridgeHandlerDocumentation,
   FileConfig,
 } from './handlers';
+// @ts-ignore
 import formidable from 'formidable';
 
 export interface BridgeParams<
