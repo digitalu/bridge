@@ -3,6 +3,7 @@ import { ErrorHandler } from './error';
 import { RoutesToBridgeType } from './routes';
 import type * as express from 'express';
 import { createHttpHandler } from './server/adapters/node-http';
+import http from 'http';
 
 class Bridge<Routes extends BridgeRoutes> {
   public bridgeType!: RoutesToBridgeType<Routes>;
@@ -14,6 +15,8 @@ class Bridge<Routes extends BridgeRoutes> {
   ) {}
 
   public expressMiddleware = (): express.Handler => createHttpHandler(this.routes, this.config);
+
+  public HTTPServer = () => http.createServer(createHttpHandler(this.routes, this.config));
 }
 
 export const initBridge = <Routes extends BridgeRoutes>({
